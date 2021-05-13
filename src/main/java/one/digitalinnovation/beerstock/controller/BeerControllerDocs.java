@@ -44,4 +44,20 @@ public interface BeerControllerDocs {
             @ApiResponse(code = 404, message = "Beer with given id not found.")
     })
     void deleteById(@PathVariable Long id) throws BeerNotFoundException;
+
+    @ApiOperation(value = "Increment a beer quantity found by a given valid Id")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success beer incremented in the stock"),
+        @ApiResponse(code = 404, message = "Beer with given id not found."),
+        @ApiResponse(code = 400, message = "Missing required fields or increment informed exceeds the max stock capacity.")
+    })
+    BeerDTO increment(@PathVariable Long id, QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException;
+
+    @ApiOperation(value = "Decrement a beer quantity found by a given valid Id")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success beer decremented in the stock"),
+        @ApiResponse(code = 404, message = "Beer with given id not found."),
+        @ApiResponse(code = 400, message = "Missing required fields or decrement informed exceeds the max stock capacity.")
+    })
+    BeerDTO decrement(@PathVariable Long id, QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException;
 }
